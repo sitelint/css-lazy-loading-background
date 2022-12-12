@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>CSS Lazy Loading background</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lazy loading background image inside the CSS.">
+  <meta name="keywords" content="css, background, image, lazy, loading">
+
+  <link rel="icon" href="https://www.sitelint.com/wp-content/themes/sitelint/assets/images/favicon.ico" sizes="any">
+  <link rel="icon" href="https://www.sitelint.com/wp-content/themes/sitelint/assets/images/favicon.svg"
+    type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      padding: 2rem;
+      position: relative;
+    }
+
+    h1,
+    h2 {
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+    }
+
+    main {
+      max-width: 80ch;
+    }
+
+    ul li {
+      margin-bottom: 1rem;
+    }
+
+    .logo a {
+      border-radius: 3px;
+      display: inline-flex;
+      height: 38px;
+    }
+
+    .logo svg {
+      border-radius: 3px;
+      height: 38px;
+      padding: 1px;
+      width: 110px;
+    }
+
+    .skip-menu a {
+      left: 50%;
+      transform: translate(-50%, 0);
+      background-color: #0070d1;
+      border-radius: 0;
+      box-shadow: 0px 0px 18px -1px rgb(0 0 0 / 32%);
+      color: #fff;
+      display: block;
+      padding: 1rem;
+      position: absolute;
+      text-align: center;
+      top: -7rem;
+      transition: top .3s ease-in-out;
+      z-index: 999999;
+    }
+
+    .skip-menu a:focus {
+      background-color: #0070d1;
+      color: #fff;
+      outline-color: #0070d1;
+      top: 4px;
+    }
+
+    p {
+      margin-bottom: 2rem;
+      max-width: 80ch;
+    }
+
+    .large-block {
+      min-height: 1000px;
+    }
+
+    .lazy-background {
+      --background-image-lazy: prague-3010406_1920_thumbnail.jpeg;
+      background-image: var(--background-image-lazy);
+      background-repeat: no-repeat;
+      background-size: contain;
+      height: 286px;
+      width: 480px;
+    }
+  </style>
+
+</head>
+<body>
+
+  <nav aria-label="Skip links" class="skip-menu">
+    <a class="site-skip" href="#main-content">Skip to content</a>
+  </nav>
+
+  <header class="logo mb-4">
+    <a href="https://www.sitelint.com/"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"
+        width="372" height="128" viewBox="0 0 372 128">
+        <path fill="#0070d1" d="M0 0h372v128H0Z" style="stroke-width:0.426193" />
+        <path fill="#fff"
+          d="M37.578 79.375Q58.128 80.5 65.402 80.5q1.725 0 2.7-.976 1.05-1.05 1.05-2.775V70h-17.25q-7.874 0-11.474-3.525-3.526-3.6-3.526-11.475v-2.25q0-7.875 3.526-11.4 3.6-3.6 11.474-3.6h26.326v10.5H54.903q-4.5 0-4.5 4.5v1.5q0 4.5 4.5 4.5h13.5q7.35 0 10.8 3.45 3.45 3.45 3.45 10.8v3.75q0 7.35-3.45 10.8-3.45 3.45-10.8 3.45-3.825 0-8.1-.15l-6.9-.3q-7.65-.375-15.825-1.05ZM105.146 52v38.25H92.022V62.125h-5.625V52ZM92.022 37h13.124v10.5H92.022Zm48.399 53.25q-7.276.75-14.251.75-5.1 0-8.175-3.075-3.074-3.075-3.074-8.175V60.625h-4.5V50.5h4.5l1.5-9h11.625v9h9.374v10.125h-9.374v17.25q0 1.126.75 1.875.75.75 1.875.75h9.75zm19.851-31.125q-3 0-3 3v4.125h12.75v-4.125q0-3-3-3zM181.647 89.5q-14.475 1.5-26.25 1.5-5.1 0-8.175-3.075-3.075-3.075-3.075-8.175v-18q0-5.625 3.15-8.775 3.225-3.225 8.85-3.225h15q5.625 0 8.775 3.225 3.225 3.15 3.225 8.774v13.876h-25.875v3q0 1.126.75 1.875.75.75 1.875.75 7.425 0 21.75-1.125zm22.47-9.75h27.375v10.5h-40.875v-52.5h13.5zM252.51 52v38.25h-13.125V62.125h-5.626V52Zm-13.125-15h13.125v10.5h-13.125zm42.773 23.625q-3.975 0-9 1.5V90.25h-13.124V50.5h11.625l.75 3.749q3.525-2.324 7.2-3.375 3.75-1.125 6.3-1.125h3.375q5.1 0 8.175 3.075 3.075 3.076 3.075 8.175v29.25h-13.125v-27q0-1.125-.75-1.875t-1.875-.75zm52.94 29.625q-7.275.75-14.25.75-5.1 0-8.175-3.075-3.075-3.075-3.075-8.175V60.625h-4.5V50.5h4.5l1.5-9h11.624v9h9.375v10.125h-9.375v17.25q0 1.126.75 1.875.75.75 1.875.75h9.75z"
+          style="fill:#fff;stroke-width:0.745486" />
+      </svg><span class="visually-hidden">SiteLint</span></a>
+  </header>
+
+  <main id="main-content">
+    <h1>Can you lazy load CSS background images?</h1>
+
+    <p>It isn't available out of the box, but it can be done using IntersectionObserver.</p>
+    <p>CSS syntax:</p>
+    <p><pre><code>--background-image-lazy: prague-3010406_1920_thumbnail.jpeg;
+background-image: var(--background-image-lazy);</code></pre></p>
+
+    <div class="large-block"><p>Large block example.</p>
+      <ul>
+        <li>Open browser developer console.</li>
+        <li>Go to the Network tab.</li>
+        <li>Observe the network traffic. Once the element with specified background appears in the viewport then the
+          background should load.</li>
+        <li>Make sure to clear the browser cache when reloading the page because the image will be in the cache and if
+          it's in the cache then the browser renders the background.</li>
+      </ul>
+    </div>
+    <div class="lazy-background"></div>
+  </main>
+
+  <script src="css-lazy-loading-background.js"></script>
+  <script>
+    (function() {
+      const cssLazyLoadingBackground = new window['css-lazy-loading-background'].CssLazyLoadingBackground();
+
+      cssLazyLoadingBackground.initialise();
+    }());
+  </script>
+</body>
+
+</html>
