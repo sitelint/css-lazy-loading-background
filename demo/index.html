@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>CSS Lazy Loading background</title>
+  <title>CSS background lazy loading</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Lazy loading background image inside the CSS.">
@@ -98,6 +98,7 @@
   </style>
 
 </head>
+
 <body>
 
   <nav aria-label="Skip links" class="skip-menu">
@@ -119,10 +120,13 @@
 
     <p>It isn't available out of the box, but it can be done using IntersectionObserver.</p>
     <p>CSS syntax:</p>
-    <p><pre><code>--background-image-lazy: prague-3010406_1920_thumbnail.jpeg;
-background-image: var(--background-image-lazy);</code></pre></p>
+    <p>
+    <pre><code>--background-image-lazy: prague-3010406_1920_thumbnail.jpeg;
+background-image: var(--background-image-lazy);</code></pre>
+    </p>
 
-    <div class="large-block"><p>Large block example.</p>
+    <div class="large-block">
+      <p>Large block example.</p>
       <ul>
         <li>Open browser developer console.</li>
         <li>Go to the Network tab.</li>
@@ -137,12 +141,22 @@ background-image: var(--background-image-lazy);</code></pre></p>
 
   <script src="css-lazy-loading-background.js"></script>
   <script>
-    (function() {
+    (function () {
       const cssLazyLoadingBackground = new window['css-lazy-loading-background'].CssLazyLoadingBackground();
 
       cssLazyLoadingBackground.initialise();
     }());
   </script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JTTSY0KNFH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-JTTSY0KNFH');
+  </script>
+
 </body>
 
 </html>

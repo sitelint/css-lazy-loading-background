@@ -12,7 +12,7 @@ export class CssLazyLoadingBackground {
 
   public initialise(): void {
     const initialiseStyleBackgroundIntersectionObserver = () => {
-      const lazyBackgrounds: Element[] = Array.from(document.querySelectorAll('*'));
+      const lazyBackgrounds: Element[] = Array.from(document.querySelectorAll('[style*=\'--background-image-lazy\']'));
 
       if (lazyBackgrounds.length === 0) {
         return;
@@ -30,7 +30,8 @@ export class CssLazyLoadingBackground {
           return;
         }
 
-        target.style.backgroundImage = `url('${backgroundImageLazy}')`;
+        target.style.backgroundImage = `url('${backgroundImageLazy.replace(/(?:\\(.))/g, '$1').trim()}')`;
+        target.style.removeProperty('--background-image-lazy');
         this.lazyBackgroundObserver!.unobserve(target);
       };
 
@@ -45,8 +46,8 @@ export class CssLazyLoadingBackground {
           return;
         }
 
-        (element as HTMLElement).style.backgroundImage = `url('${backgroundImageLazy}')`;
-
+        (element as HTMLElement).style.backgroundImage = `url('${backgroundImageLazy.replace(/(?:\\(.))/g, '$1').trim()}')`;
+        (element as HTMLElement).style.removeProperty('--background-image-lazy');
       };
 
       if (this.isIntersectionObserverSupported) {
