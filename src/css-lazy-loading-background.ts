@@ -55,9 +55,11 @@ export class CssLazyLoadingBackground {
           entries.forEach(loadBackgroundIfElementOnScreen);
         });
         lazyBackgrounds.forEach(observeElementVisibility);
-      } else {
-        lazyBackgrounds.forEach(setBackground);
+
+        return;
       }
+
+      lazyBackgrounds.forEach(setBackground);
     };
 
     if (typeof document.readyState === 'string' && document.readyState === 'complete') {
