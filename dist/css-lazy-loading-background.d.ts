@@ -2,6 +2,7 @@ declare class CssLazyLoadingBackground {
     private lazyBackgroundObserver;
     private isIntersectionObserverSupported;
     private processEntriesBindInstance;
+    private skipElements;
     constructor();
     private loadBackgroundIfElementOnScreen;
     private processEntries;

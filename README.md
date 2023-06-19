@@ -14,33 +14,7 @@ First download the package:
 npm install @sitelintcode/css-lazy-loading-background --save
 ```
 
-### Usage
-
-#### TypeScript
-
-```TypeScript
-  import CssLazyLoadingBackground from '@sitelintcode/css-lazy-loading-background';
-
-  const cssLazyLoadingBackground: CssLazyLoadingBackground = new CssLazyLoadingBackground();
-
-  cssLazyLoadingBackground.initialise();
-```
-
-The `initialise` method will automatically be applied based on `document.readyState` and if the page isn't loaded yet then use `DOMContentLoaded` event.
-
-#### JavaScript
-
-The package is also exposed to the global object (`window` in the browser) so you can use it in following way:
-
-```HTML
-  <script>
-    (function() {
-      const cssLazyLoadingBackground = new window['css-lazy-loading-background'].CssLazyLoadingBackground();
-
-      cssLazyLoadingBackground.initialise();
-    }());
-  </script>
-```
+### Setting up the image
 
 #### CSS
 
@@ -52,6 +26,40 @@ Example usage:
 ```CSS
   --background-image-lazy: prague-3010406_1920_thumbnail.jpeg;
   background-image: var(--background-image-lazy);
+```
+
+#### HTML and attribute `data-lazy-background`
+
+Eventually, if you want to use as the attribute `data-lazy-background` then:
+
+```HTML
+  <div class="example-data-lazy-background" data-lazy-background="san-francisco-panorama.jpg"></div>
+```
+
+### TypeScript
+
+```TypeScript
+  import CssLazyLoadingBackground from '@sitelintcode/css-lazy-loading-background';
+
+  const cssLazyLoadingBackground: CssLazyLoadingBackground = new CssLazyLoadingBackground();
+
+  cssLazyLoadingBackground.initialise();
+```
+
+The `initialise` method will automatically be applied based on `document.readyState` and if the page isn't loaded yet then use `DOMContentLoaded` event.
+
+### JavaScript
+
+The package is also exposed to the global object (`window` in the browser) so you can use it in following way:
+
+```HTML
+  <script>
+    (function() {
+      const cssLazyLoadingBackground = new window['css-lazy-loading-background'].CssLazyLoadingBackground();
+
+      cssLazyLoadingBackground.initialise();
+    }());
+  </script>
 ```
 
 ## Technical

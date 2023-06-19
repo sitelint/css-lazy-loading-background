@@ -5,11 +5,44 @@ export class CssLazyLoadingBackground {
   private lazyBackgroundObserver: IntersectionObserver | null;
   private isIntersectionObserverSupported: boolean;
   private processEntriesBindInstance: any;
+  private skipElements: string;
 
   constructor() {
     this.lazyBackgroundObserver = null;
     this.isIntersectionObserverSupported = CommonUtilities.isHostMethod(globalThis, 'IntersectionObserver');
     this.processEntriesBindInstance = null;
+
+    this.skipElements = `${[
+      ':root',
+      'base',
+      'body',
+      'br',
+      'code',
+      'defs',
+      'desc',
+      'filter',
+      'g',
+      'head',
+      'hgroup',
+      'hr',
+      'iframe',
+      'img',
+      'input',
+      'linearGradient',
+      'link',
+      'mark',
+      'meta',
+      'noscript',
+      'object',
+      'option',
+      'path',
+      'script',
+      'stop',
+      'style',
+      'title'
+    ].map((i: string): string => {
+      return `:not(${i})`;
+    }).join('')}`;
   }
 
   private loadBackgroundIfElementOnScreen(entry: IntersectionObserverEntry): void {
@@ -20,13 +53,23 @@ export class CssLazyLoadingBackground {
     const target: HTMLElement = (entry.target as HTMLElement);
     const backgroundImageLazy: string = globalThis.getComputedStyle(target).getPropertyValue('--background-image-lazy');
 
-    if (backgroundImageLazy.length === 0) {
+    if (backgroundImageLazy.length > 0) {
+      target.style.backgroundImage = `url('${backgroundImageLazy.replace(/(?:\\(.))/g, '$1').trim()}')`;
+      target.style.removeProperty('--background-image-lazy');
+
+      this.lazyBackgroundObserver!.unobserve(target);
+
       return;
     }
 
-    target.style.backgroundImage = `url('${backgroundImageLazy.replace(/(?:\\(.))/g, '$1').trim()}')`;
-    target.style.removeProperty('--background-image-lazy');
-    this.lazyBackgroundObserver!.unobserve(target);
+    const dataBackgroundImage: string | null = target.getAttribute('data-lazy-background');
+
+    if (typeof dataBackgroundImage === 'string' && dataBackgroundImage.length > 0) {
+      target.style.backgroundImage = `url('${dataBackgroundImage}')`;
+      target.removeAttribute('data-lazy-background');
+
+      this.lazyBackgroundObserver!.unobserve(target);
+    }
   }
 
   private processEntries(entries: IntersectionObserverEntry[]): void {
@@ -51,11 +94,14 @@ export class CssLazyLoadingBackground {
   }
 
   private getLazyBackgroundDetail(element: Element): boolean {
-    return globalThis.getComputedStyle(element).getPropertyValue('--background-image-lazy').length > 0;
+    const backgroundImageLazy: string = globalThis.getComputedStyle(element).getPropertyValue('--background-image-lazy');
+    const dataBackgroundImage: string | null = element.getAttribute('data-lazy-background');
+
+    return backgroundImageLazy.length > 0 || typeof dataBackgroundImage === 'string' && dataBackgroundImage.length > 0;
   }
 
   private initialiseStyleBackgroundIntersectionObserver(): void {
-    const allElements: Element[] = Array.from(document.querySelectorAll('body *'));
+    const allElements: Element[] = Array.from(document.querySelectorAll(`body *${this.skipElements}`));
 
     if (allElements.length === 0) {
       return;
