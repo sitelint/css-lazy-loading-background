@@ -54,7 +54,7 @@ export class CssLazyLoadingBackground {
     const backgroundImageLazy: string = globalThis.getComputedStyle(target).getPropertyValue('--background-image-lazy');
 
     if (backgroundImageLazy.length > 0) {
-      target.style.backgroundImage = `url('${backgroundImageLazy.replace(/(?:\\(.))/g, '$1').trim()}')`;
+      target.style.setProperty('background-image', `url('${backgroundImageLazy.replace(/(?:\\(.))/g, '$1').trim()}')`);
       target.style.removeProperty('--background-image-lazy');
 
       this.lazyBackgroundObserver!.unobserve(target);
@@ -62,10 +62,20 @@ export class CssLazyLoadingBackground {
       return;
     }
 
+    const backgroundImageSetLazy: string = globalThis.getComputedStyle(target).getPropertyValue('--background-image-set-lazy');
+
+    if (backgroundImageSetLazy.length > 0) {
+      const backgroundImageValue: string = backgroundImageSetLazy.replace('image-lazy-set', 'image-set');
+
+      target.style.setProperty('background-image', backgroundImageValue);
+
+      return;
+    }
+
     const dataBackgroundImage: string | null = target.getAttribute('data-lazy-background');
 
     if (typeof dataBackgroundImage === 'string' && dataBackgroundImage.length > 0) {
-      target.style.backgroundImage = `url('${dataBackgroundImage}')`;
+      target.style.setProperty('background-image', `url('${dataBackgroundImage}')`);
       target.removeAttribute('data-lazy-background');
 
       this.lazyBackgroundObserver!.unobserve(target);
@@ -85,19 +95,29 @@ export class CssLazyLoadingBackground {
   private setBackground(element: Element): void {
     const backgroundImageLazy = globalThis.getComputedStyle(element).getPropertyValue('--background-image-lazy');
 
-    if (backgroundImageLazy.length === 0) {
+    if (backgroundImageLazy.length > 0) {
+      (element as HTMLElement).style.setProperty('background-image', `url('${backgroundImageLazy.replace(/(?:\\(.))/g, '$1').trim()}')`);
+      (element as HTMLElement).style.removeProperty('--background-image-lazy');
+
       return;
     }
 
-    (element as HTMLElement).style.backgroundImage = `url('${backgroundImageLazy.replace(/(?:\\(.))/g, '$1').trim()}')`;
-    (element as HTMLElement).style.removeProperty('--background-image-lazy');
+    const backgroundImageSetLazy = globalThis.getComputedStyle(element).getPropertyValue('--background-image-set-lazy');
+
+    if (backgroundImageSetLazy.length > 0) {
+      const backgroundImageValue: string = backgroundImageSetLazy.replace('image-lazy-set', 'image-set');
+
+      (element as HTMLElement).style.setProperty('background-image', backgroundImageValue);
+      (element as HTMLElement).style.removeProperty('--background-image-set-lazy');
+    }
   }
 
   private getLazyBackgroundDetail(element: Element): boolean {
     const backgroundImageLazy: string = globalThis.getComputedStyle(element).getPropertyValue('--background-image-lazy');
+    const backgroundImageSetLazy: string = globalThis.getComputedStyle(element).getPropertyValue('--background-image-set-lazy');
     const dataBackgroundImage: string | null = element.getAttribute('data-lazy-background');
 
-    return backgroundImageLazy.length > 0 || typeof dataBackgroundImage === 'string' && dataBackgroundImage.length > 0;
+    return backgroundImageLazy.length > 0 || backgroundImageSetLazy.length > 0 || typeof dataBackgroundImage === 'string' && dataBackgroundImage.length > 0;
   }
 
   private initialiseStyleBackgroundIntersectionObserver(): void {

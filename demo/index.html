@@ -97,6 +97,20 @@
       width: 480px;
     }
 
+    .lazy-background-image-set {
+      --background-image-set-lazy: image-lazy-set(
+        url("ekg_1280.png") type("image/png"),
+        "ekg_1280.webp" type("image/webp")
+      );
+
+      background-image: var(--background-image-set-lazy);
+      background-repeat: no-repeat;
+      background-size: contain;
+      margin-bottom: 2rem;
+      height: 454px;
+      width: 500px;
+    }
+
     .example-data-lazy-background {
       background-repeat: no-repeat;
       background-size: contain;
@@ -127,10 +141,19 @@
     <h1>Can you lazy load CSS background images?</h1>
 
     <p>It isn't available out of the box, but it can be done using IntersectionObserver.</p>
-    <p>CSS syntax:</p>
+    <p>CSS syntax for a <strong>single image</strong>:</p>
     <p>
     <pre><code>--background-image-lazy: prague-3010406_1920_thumbnail.jpeg;
 background-image: var(--background-image-lazy);</code></pre>
+    </p>
+
+    <p>CSS syntax for <strong>multiple images</strong> using <code>image-set</code>:</p>
+    <p>
+    <pre><code>--background-image-set-lazy: image-lazy-set(
+      url("ekg_1280.png") type("image/png"),
+      "ekg_1280.webp" type("image/webp")
+    );
+background-image: var(--background-image-set-lazy);</code></pre>
     </p>
 
     <div class="large-block">
@@ -146,6 +169,11 @@ background-image: var(--background-image-lazy);</code></pre>
     </div>
     <div class="lazy-background"></div>
     <div class="example-data-lazy-background" data-lazy-background="san-francisco-panorama.jpg"></div>
+
+    <div class="large-block">
+      <p>Large block example. This relates to <code>image-set</code></p>
+    </div>
+    <div class="lazy-background-image-set"></div>
   </main>
 
   <script>

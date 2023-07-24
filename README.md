@@ -21,11 +21,21 @@ npm install @sitelintcode/css-lazy-loading-background --save
 Specify the whole image URL in `--background-image-lazy:`, but without `url()`, as normally you would use.
 
 
-Example usage:
+Example usage for a single image:
 
 ```CSS
   --background-image-lazy: prague-3010406_1920_thumbnail.jpeg;
   background-image: var(--background-image-lazy);
+```
+
+Example usage for for multiple images through `image-set` CSS functional notation:
+
+```CSS
+  --background-image-set-lazy: image-lazy-set(
+    url("ekg_1280.png") type("image/png"),
+    "ekg_1280.webp" type("image/webp")
+  );
+  background-image: var(--background-image-set-lazy);
 ```
 
 #### HTML and attribute `data-lazy-background`
